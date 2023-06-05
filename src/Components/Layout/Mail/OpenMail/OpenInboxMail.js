@@ -13,22 +13,37 @@ const OpenInboxMail = () => {
       <div className="col-md-12">
         <div className="card">
           <div className="card-body">
-            <button
-              className="btn-sm border-dark bg-white"
-              onClick={() => history("/dashboard/inbox")}
-            >
-              Back
-            </button>
+            {obj.from && (
+              <button
+                className="btn-sm border-dark bg-white"
+                onClick={() => history("/dashboard/inbox")}
+              >
+                Back
+              </button>
+            )}
+            {obj.to && (
+              <button
+                className="btn-sm border-dark bg-white"
+                onClick={() => history("/dashboard/sent")}
+              >
+                Back
+              </button>
+            )}
+
             <div className="card-text mt-3">
               <div className="row">
                 <p className="d-flex pt-3shadow mt-4 ml-4">
                   <span className="criclename justify-content-center mr-3 rounded-circle text-Uppercase">
-                    {obj.from ? obj.from : ""}
+                    {obj.from ? obj.from : obj.to}
                   </span>
                 </p>
                 <p style={{ marginTop: "3.5%" }}>
-                  <strong className="mt-3">From-</strong>
-                  {obj.from}
+                  {obj.from ? (
+                    <strong className="mt-3">From-</strong>
+                  ) : (
+                    <strong className="mt-3">To-</strong>
+                  )}
+                  {obj.from ? obj.from : obj.to}
                 </p>
                 <p style={{ marginLeft: "60%", marginTop: "3.5%" }}>
                   <strong>

@@ -33,7 +33,9 @@ function App() {
             <Route path="inbox" element={<Inbox />}>
               <Route path=":mailId" element={<OpenInboxMail />} />
             </Route>
-            <Route path="sent" element={<Sent />} />
+            <Route path="sent" element={<Sent />}>
+              <Route path=":mailId" element={<OpenInboxMail />} />
+            </Route>
             <Route path="composemail" element={<NewMsg />} />
           </Route>
         )}
@@ -45,11 +47,3 @@ function App() {
 }
 
 export default App;
-// <Route path="dashboard" element={<MailBoard />}>
-//   <Route index element={<MailBox />} />
-//   <Route path="inbox" element={<MailBox item="inbox" />}>
-//     <Route path=":mailId" element={<MailBox item="open" />} />
-//   </Route>
-//   <Route path="sent" element={<MailBox item="sent" />} />
-//   <Route path="composemail" element={<MailBox item="mail" />} />
-// </Route>

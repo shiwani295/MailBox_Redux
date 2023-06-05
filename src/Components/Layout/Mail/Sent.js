@@ -80,7 +80,16 @@ const Sent = () => {
                         </td>
 
                         <td className="name ">
-                          <Link style={{ textDecoration: "none" }}>
+                          <Link
+                            style={{ textDecoration: "none" }}
+                            to={`${sentAry[0].id}`}
+                            state={{
+                              to: sentAry[0].values.to,
+                              subject: sentAry[0].values.subject,
+                              msgBody: sentAry[0].values.msgBody,
+                              time: sentAry[0].values.time,
+                            }}
+                          >
                             <span className="bg-dark text-white p-1 rounded">
                               To-{sentAry[0].values.to}
                             </span>

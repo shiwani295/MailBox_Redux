@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, Outlet } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { mailSliceAction } from "../../../Store/Mail";
 
 const Inbox = () => {
@@ -98,7 +98,12 @@ const Inbox = () => {
                           <Link
                             style={{ textDecoration: "none" }}
                             to={`${inboxMails[0].id}`}
-                            state={inboxMails[0].values}
+                            state={{
+                              from: inboxMails[0].values.from,
+                              subject: inboxMails[0].values.subject,
+                              msgBody: inboxMails[0].values.msgBody,
+                              time: inboxMails[0].values.time,
+                            }}
                           >
                             <span className="bg-dark text-white p-1 rounded">
                               From-{inboxMails[0].values.from}
