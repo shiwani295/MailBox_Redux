@@ -11,12 +11,17 @@ const Navbar = () => {
   const email = localStorage.getItem("email");
   const logoutHandler = () => {
     dispatch(AuthAction.Logout());
+    localStorage.removeItem("token");
+    localStorage.removeItem("email");
     navigate("/login");
   };
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-dark headerNav">
-      <h3 className="text-white">MailBox</h3>
+      <Link to={"/"} style={{ textDecoration: "none" }}>
+        <h3 className="text-white">MailBox</h3>
+      </Link>
+
       <button
         className="navbar-toggler"
         type="button"
@@ -31,17 +36,17 @@ const Navbar = () => {
 
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav mr-auto">
-          <li className="nav-item"></li>
+          <li className="nav-item">
+            <Link
+              to={"/dashboard/inbox"}
+              className="text-white ml-4"
+              style={{ textDecoration: "none" }}
+            >
+              Mails
+            </Link>
+          </li>
         </ul>
         <ul className="navbar-nav">
-          <form className="form-inline my-2 my-lg-0">
-            <input
-              className="form-control mr-sm-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-          </form>
           {!isAuth && (
             <Link
               className="btn btn-outline-dark text-white border-white"
@@ -53,24 +58,25 @@ const Navbar = () => {
           )}
           {isAuth && (
             <li className="nav-item dropdown">
-              <button
-                className="nav-link btn bg-white ml-3 mr-5"
-                href="#"
+              <i
+                className="fa fa-user  text-white mr-5"
+                aria-hidden="true"
                 id="navbarDropdown"
                 data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false"
-              >
-                <i className="fa fa-user" aria-hidden="true"></i>
-              </button>
+                style={{ cursor: "pointer" }}
+              ></i>
               <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                <Link className="dropdown-item" href="#">
-                  {email}
-                </Link>
+                <p className="ml-3">{email}</p>
 
-                <Link className="dropdown-item" onClick={logoutHandler}>
+                <p
+                  className="ml-3"
+                  onClick={logoutHandler}
+                  style={{ cursor: "pointer" }}
+                >
                   Logout
-                </Link>
+                </p>
               </div>
             </li>
           )}

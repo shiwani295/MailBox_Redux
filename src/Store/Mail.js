@@ -6,7 +6,6 @@ const mailSlice = createSlice({
     inboxMails: [],
     sentMails: [],
     markUnRead: [],
-    offline: true,
   },
   reducers: {
     AllinboxMails(state, action) {
@@ -17,12 +16,6 @@ const mailSlice = createSlice({
     },
     ReadData(state, action) {
       state.markUnRead = action.payload;
-    },
-    online(state) {
-      state.offline = false;
-    },
-    offline(state) {
-      state.offline = true;
     },
   },
 });
