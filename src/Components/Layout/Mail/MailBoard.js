@@ -15,7 +15,7 @@ const MailBoard = () => {
     if (convertedArr.length > 0) {
       let count = 0;
       for (let i = 0; i < convertedArr.length; i++) {
-        if (convertedArr[i].values.read === true) {
+        if (convertedArr[i].values.read === false) {
           count++;
         }
       }
@@ -71,7 +71,7 @@ const MailBoard = () => {
                       style={{ textDecoration: "none" }}
                     >
                       <i className="fa fa-star mr-2" aria-hidden="true"></i>
-                      Read(
+                      Unread(
                       {read})
                     </Link>
                     <Link
