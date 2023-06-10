@@ -1,39 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { mailSliceAction } from "../../../Store/Mail";
+import useFetch from "./CustomHook/SentCustonHook";
+
 const Sent = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const history = useNavigate();
   const loginUser = useSelector((state) => state.Auth.userEmail);
   const AddsentMail = useSelector((state) => state.Mail.sentMails);
   const LoginUserPlainEmail = loginUser.replace(/[^a-zA-Z0-9]/g, "");
 
-  useEffect(() => {
-    if (LoginUserPlainEmail) {
-      fetch(
-        `https://mailbox-57936-default-rtdb.firebaseio.com/${LoginUserPlainEmail}/sendBox.json`,
-        {
-          method: "GET",
-        }
-      ).then((res) => {
-        if (res.ok) {
-          return res.json().then((data) => {
-            if (data) {
-              const result = Object.keys(data).map((key) => [
-                { id: key.toString(), values: data[key] },
-              ]);
-
-              dispatch(mailSliceAction.AddsentMails(result));
-            } else {
-              dispatch(mailSliceAction.AddsentMails([]));
-            }
-          });
-        }
-      });
-    }
-  });
-
+  //call custom hook
+  useFetch(
+    `https://mailbox-57936-default-rtdb.firebaseio.com/${LoginUserPlainEmail}/sendBox.json`
+  );
   //send delete
 
   const SendDeleteHandler = (id) => {

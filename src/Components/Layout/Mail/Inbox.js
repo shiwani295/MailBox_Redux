@@ -1,48 +1,21 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { mailSliceAction } from "../../../Store/Mail";
-import "../Mail/Inbox.css";
-import MailBoard from "./MailBoard";
 
+import "../Mail/Inbox.css";
+import useInboxhook from "./CustomHook/InboxHook";
 const Inbox = () => {
-  const dispatch = useDispatch();
   const history = useNavigate();
   const loginUser = useSelector((state) => state.Auth.userEmail);
   const Allinboxmails = useSelector((state) => state.Mail.inboxMails);
   const LoginUserPlainEmail = loginUser.replace(/[^a-zA-Z0-9]/g, "");
-  const [search, setSearch] = useState("");
 
-  useEffect(() => {
-    if (LoginUserPlainEmail) {
-      fetch(
-        `https://mailbox-57936-default-rtdb.firebaseio.com/${LoginUserPlainEmail}/inbox.json`,
-        {
-          method: "GET",
-        }
-      )
-        .then((res) => {
-          if (res.ok) {
-            return res.json().then((data) => {
-              if (data) {
-                const result = Object.keys(data).map((key) => [
-                  { id: key.toString(), values: data[key] },
-                ]);
+  // get inbox hook
+  useInboxhook(
+    `https://mailbox-57936-default-rtdb.firebaseio.com/${LoginUserPlainEmail}/inbox.json`
+  );
 
-                dispatch(mailSliceAction.AllinboxMails(result));
-              } else {
-                dispatch(mailSliceAction.ReadData([]));
-                dispatch(mailSliceAction.AllinboxMails([]));
-              }
-            });
-          }
-        })
-        .catch((error) => {
-          console.log("error");
-        });
-    }
-  });
-
+  //inbox delete
   const InboxDeleteHandler = (id) => {
     const mailId = id[0].id;
 
@@ -72,19 +45,6 @@ const Inbox = () => {
     <>
       <div className="row ">
         <div className="col-md-6 h5 d-flex  ">Mail</div>
-
-        <div className="col-md-6 search-form">
-          <form className="text-right">
-            <div className="input-group">
-              <input
-                type="text"
-                className="form-control input-sm"
-                placeholder="Search"
-                onChange={(event) => setSearch(event.target.value)}
-              />
-            </div>
-          </form>
-        </div>
         <div className="col-md-12 tab-content mt-3">
           <div className="tab-content" id="nav-tabContent">
             <div
