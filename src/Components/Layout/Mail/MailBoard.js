@@ -1,12 +1,27 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Link, Outlet, useLocation, useParams } from "react-router-dom";
-import Inbox from "./Inbox";
+import { Link, Outlet, useParams } from "react-router-dom";
 import OpenInboxMail from "./OpenMail/OpenInboxMail";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const MailBoard = () => {
   const param = useParams();
+  const [read, setRead] = useState();
   const Allinboxmails = useSelector((state) => state.Mail.inboxMails);
+  // this is for read ===true
+  let convertedArr = Allinboxmails.flat();
+  useEffect(() => {
+    if (convertedArr.length > 0) {
+      let count = 0;
+      for (let i = 0; i < convertedArr.length; i++) {
+        if (convertedArr[i].values.read === true) {
+          count++;
+        }
+      }
+      setRead(count);
+    }
+  }, [convertedArr]);
   return (
     <div className="container-fluid">
       <div className="row mt-5">
@@ -41,20 +56,23 @@ const MailBoard = () => {
                       className="text-dark"
                       style={{ textDecoration: "none" }}
                     >
-                      Inbox({Allinboxmails.length})
+                      <i className="fa fa-inbox mr-2"></i>Inbox(
+                      {Allinboxmails.length})
                     </Link>
                     <Link
                       to="sent"
                       className="text-dark"
                       style={{ textDecoration: "none" }}
                     >
-                      Sent
+                      <i className="fa fa-mail-forward mr-2"></i>Sent
                     </Link>
                     <Link
                       className="text-dark"
                       style={{ textDecoration: "none" }}
                     >
-                      Unread({Allinboxmails.length})
+                      <i className="fa fa-star mr-2" aria-hidden="true"></i>
+                      Read(
+                      {read})
                     </Link>
                     <Link
                       className="text-dark"

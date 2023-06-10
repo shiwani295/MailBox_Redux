@@ -1,17 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { mailSliceAction } from "../../../Store/Mail";
 const Sent = () => {
   const dispatch = useDispatch();
+  const history = useNavigate();
   const loginUser = useSelector((state) => state.Auth.userEmail);
   const AddsentMail = useSelector((state) => state.Mail.sentMails);
   const LoginUserPlainEmail = loginUser.replace(/[^a-zA-Z0-9]/g, "");
-  const [msg, setMsg] = useState(
-    <div className="text-center mt-3 ">
-      <h3>Sent Data Not Available!! </h3>
-    </div>
-  );
 
   useEffect(() => {
     if (LoginUserPlainEmail) {
@@ -27,7 +23,7 @@ const Sent = () => {
               const result = Object.keys(data).map((key) => [
                 { id: key.toString(), values: data[key] },
               ]);
-              setMsg();
+
               dispatch(mailSliceAction.AddsentMails(result));
             } else {
               dispatch(mailSliceAction.AddsentMails([]));
@@ -36,8 +32,32 @@ const Sent = () => {
         }
       });
     }
-  }, [dispatch, LoginUserPlainEmail]);
+  });
 
+  //send delete
+
+  const SendDeleteHandler = (id) => {
+    const mailId = id[0].id;
+    if (LoginUserPlainEmail) {
+      fetch(
+        `https://mailbox-57936-default-rtdb.firebaseio.com/${LoginUserPlainEmail}/sendBox/${mailId}.json`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      ).then((res) => {
+        if (res.ok) {
+          return res.json().then((data) => {
+            history("/dashboard/sent");
+          });
+        } else {
+          alert("something went wrong!");
+        }
+      });
+    }
+  };
   return (
     <>
       <div className="row ">
@@ -62,8 +82,8 @@ const Sent = () => {
               id="nav-home"
               aria-labelledby="nav-home-tab"
             >
-              {!AddsentMail && msg}
               {AddsentMail.map((sentAry) => {
+                // console.log(sentAry);
                 return (
                   <table
                     className="table table-hover table-mail"
@@ -84,10 +104,10 @@ const Sent = () => {
                             style={{ textDecoration: "none" }}
                             to={`${sentAry[0].id}`}
                             state={{
-                              to: sentAry[0].values.to,
                               subject: sentAry[0].values.subject,
                               msgBody: sentAry[0].values.msgBody,
                               time: sentAry[0].values.time,
+                              to: sentAry[0].values.to,
                             }}
                           >
                             <span className="bg-dark text-white p-1 rounded">
@@ -115,6 +135,7 @@ const Sent = () => {
                           <Link
                             className="text-dark"
                             style={{ textDecoration: "none" }}
+                            onClick={() => SendDeleteHandler(sentAry)}
                           >
                             <i className="fa fa-trash" aria-hidden="true"></i>
                           </Link>

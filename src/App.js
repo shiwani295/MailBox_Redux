@@ -7,7 +7,6 @@ import MailBoard from "./Components/Layout/Mail/MailBoard";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { AuthAction } from "./Store/AuthSlice";
-// import MailBox from "./Components/Layout/Mail/MailBox";
 import OpenInboxMail from "./Components/Layout/Mail/OpenMail/OpenInboxMail";
 import Inbox from "./Components/Layout/Mail/Inbox";
 import Sent from "./Components/Layout/Mail/Sent";
@@ -26,8 +25,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        {!isAuth && <Route path="/login" element={<Signupform />} />}
-        <Route path="*" element={<Signupform />} />
+        / <Route exact path="/login" element={<Signupform />} />
         {isAuth && (
           <Route path="dashboard" element={<MailBoard />}>
             <Route path="inbox" element={<Inbox />}>
@@ -39,7 +37,7 @@ function App() {
             <Route path="composemail" element={<NewMsg />} />
           </Route>
         )}
-
+        <Route path="*" element={<Signupform />} />
         <Route path="/forgotpassword" element={<Forgotpassword />} />
       </Routes>
     </>
