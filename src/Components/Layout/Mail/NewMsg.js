@@ -4,11 +4,13 @@ import { Editor } from "react-draft-wysiwyg";
 import { EditorState } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import { useNavigate } from "react-router-dom";
 
 const NewMsg = () => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const enteredTo = useRef();
   const subject = useRef();
+  const History = useNavigate();
   const loginUser = useSelector((state) => state.Auth.userEmail);
   const LoginUserPlainEmail = loginUser.replace(/[^a-zA-Z0-9]/g, "");
 
@@ -56,6 +58,8 @@ const NewMsg = () => {
               "Content-Type": "application/json",
             },
           }).then((res) => {
+            History("/dashboard/sent");
+
             if (res.ok) {
               enteredTo.current.value = "";
               subject.current.value = "";

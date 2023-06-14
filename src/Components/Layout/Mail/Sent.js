@@ -42,19 +42,6 @@ const Sent = () => {
     <>
       <div className="row ">
         <div className="col-md-6 h5 d-flex  ">Mail</div>
-
-        <div className="col-md-6 search-form">
-          <form className="text-right">
-            <div className="input-group">
-              <input
-                type="text"
-                className="form-control input-sm"
-                placeholder="Search"
-              />
-            </div>
-          </form>
-        </div>
-
         <div className="col-md-12 tab-content mt-3">
           <div className="tab-content" id="nav-tabContent">
             <div
