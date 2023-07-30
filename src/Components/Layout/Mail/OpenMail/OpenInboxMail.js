@@ -140,8 +140,8 @@ const OpenInboxMail = () => {
                     </p>
                     <p className="ml-5" style={{ marginTop: "3.5%" }}>
                       <strong className="ml-5">
-                        <span className="ml-5">{obj.time.date}</span>
-                        <span className="ml-2">{obj.time.time}</span>
+                        <span className="ml-5">{obj.date.date}</span>
+                        <span className="ml-2">{obj.date.time}</span>
                       </strong>
                     </p>
                   </div>

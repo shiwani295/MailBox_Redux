@@ -50,7 +50,6 @@ const Sent = () => {
               aria-labelledby="nav-home-tab"
             >
               {AddsentMail.map((sentAry) => {
-                // console.log(sentAry);
                 return (
                   <table
                     className="table table-hover table-mail"
@@ -73,7 +72,7 @@ const Sent = () => {
                             state={{
                               subject: sentAry[0].values.subject,
                               msgBody: sentAry[0].values.msgBody,
-                              time: sentAry[0].values.time,
+                              date: sentAry[0].values.date,
                               to: sentAry[0].values.to,
                             }}
                           >
@@ -95,8 +94,8 @@ const Sent = () => {
                           </Link>
                         </td>
                         <td className="time">
-                          {sentAry[0].values.time.date}
-                          <span> {sentAry[0].values.time.time}</span>
+                          {sentAry[0].values.date.date},
+                          <span> {sentAry[0].values.date.time}</span>
                         </td>
                         <td>
                           <Link

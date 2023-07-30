@@ -34,7 +34,7 @@ const NewMsg = () => {
       to: toReciverEmail,
       subject: Sub,
       msgBody: msg,
-      time: currentDate,
+      date: currentDate,
       from: loginUser,
       read: false,
     };

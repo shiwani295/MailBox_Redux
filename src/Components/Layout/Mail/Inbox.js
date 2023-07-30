@@ -9,7 +9,6 @@ const Inbox = () => {
   const loginUser = useSelector((state) => state.Auth.userEmail);
   const Allinboxmails = useSelector((state) => state.Mail.inboxMails);
   const LoginUserPlainEmail = loginUser.replace(/[^a-zA-Z0-9]/g, "");
-
   // get inbox hook
   useInboxhook(
     `https://mailbox-57936-default-rtdb.firebaseio.com/${LoginUserPlainEmail}/inbox.json`
@@ -94,7 +93,7 @@ const Inbox = () => {
                                 subject: inboxMails[0].values.subject,
                                 from: inboxMails[0].values.from,
                                 msgBody: inboxMails[0].values.msgBody,
-                                time: inboxMails[0].values.time,
+                                date: inboxMails[0].values.date,
                               }}
                             >
                               <span className="bg-dark text-white p-1 rounded">
@@ -115,9 +114,9 @@ const Inbox = () => {
                             </Link>
                           </td>
                           <td className="time">
-                            {inboxMails[0].values.time.date}
+                            {inboxMails[0].values.date.date}
                             <span className="ml-2">
-                              {inboxMails[0].values.time.time}
+                              {inboxMails[0].values.date.time}
                             </span>
                           </td>
                           <td>
